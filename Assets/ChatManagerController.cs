@@ -7,16 +7,28 @@ using UnityEngine.UI;
 
 public class ChatManagerController : NetworkBehaviour
 {
-    //Connection Variables
+    [Header("Connection Variables")]
     public string username;
+
+    [Header("Connection Panel Variables")]
     public GameObject connectionPanel;
     public TMP_InputField usernameInput;
+    public GameObject iconConnection;
+    public TextMeshProUGUI usernameDisplay;
 
-    //Chatscreen variables
+    [Header("Chat Screen Variables")]
     public TMP_InputField chatInput;
     public GameObject chatPanel;
     public TextMeshProUGUI chatText;
     public Scrollbar scrollbar;
+
+    private void Awake()
+    {
+        Screen.SetResolution(820, 480, false);
+        iconConnection.SetActive(false);
+        connectionPanel.SetActive(true);
+        chatPanel.SetActive(false);
+    }
 
     //Connections
     public void ServerConnection()
@@ -24,6 +36,8 @@ public class ChatManagerController : NetworkBehaviour
         if (NetworkManager.Singleton.StartServer())
         {
             connectionPanel.SetActive(false);
+            iconConnection.SetActive(true);
+            usernameDisplay.text = "Server";
             chatText.text += "Server Started\n";
         }
     }
@@ -34,14 +48,18 @@ public class ChatManagerController : NetworkBehaviour
         {
             chatPanel.SetActive(true);
             username = usernameInput.text;
+            
             NetworkManager.Singleton.StartClient();
             connectionPanel.SetActive(false);
+            iconConnection.SetActive(true);
+            usernameDisplay.text = username;
+            
             StartCoroutine(ClientConnected());
 
         }
     }
 
-    //Chat Functions (Networked)
+    //Chat Functions
     [ServerRpc(RequireOwnership = false)]
     public void SendChatMessageServerRpc(string message, ulong clientID)
     {

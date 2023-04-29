@@ -24,7 +24,7 @@ public class ChatManagerController : NetworkBehaviour
 
     private void Awake()
     {
-        Screen.SetResolution(820, 480, false);
+        Screen.SetResolution(850, 480, false);
         iconConnection.SetActive(false);
         connectionPanel.SetActive(true);
         chatPanel.SetActive(false);

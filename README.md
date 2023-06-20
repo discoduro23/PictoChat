@@ -1,0 +1,1 @@
+This is my first project based on NETCODE. It's a local chat with only a room where someone on your same Wifi can add if there is a host started. It is a simple implementation, that can be forked only with educational purposes and NOT TO COPY MY WORK.
